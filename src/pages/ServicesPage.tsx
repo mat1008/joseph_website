@@ -72,7 +72,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-10">
             <h2 className="text-5xl font-extrabold mb-4">For elite athletes</h2>
-            <p className="text-lg text-gray-200">Our DNA is high level performance.</p>
+            <p className="text-lg text-gray-200"><i>Our DNA is high level performance.</i></p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 items-start">
@@ -148,7 +148,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
           </div>
 
           <div className="mt-6 p-5 bg-dark-bg/60 border border-gray-700 rounded-md">
-            <h3 className="text-2xl font-semibold mb-1"><i>Sorry, we're at full capcity</i></h3>
+            <h3 className="text-2xl font-semibold mb-1"><i>Sorry, we're at full capacity</i></h3>
             <p className="text-gray-400">Our athlete promotion is complete for 2024!</p>
             <p className="text-gray-200 mt-2">
               Feel free to leave us a message for 2025 below, or discover our race briefings.
@@ -167,7 +167,6 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-10">
             <h2 className="text-5xl font-extrabold mb-4">For all athletes</h2>
-            <p className="text-lg text-gray-200">Conferences, community events, and accessible tools to bring elite-grade algorithms to everyone.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {offerings.map((o) => (
