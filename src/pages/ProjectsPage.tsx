@@ -69,9 +69,9 @@ const ProjectsPage: React.FC = () => {
     <div className="bg-dark-bg text-white min-h-screen pt-16">
       {/* Hero Section */}
       <section
-        className="py-20 relative"
+        className="py-20 relative font-sans"
         style={{
-          backgroundImage: "url('https://www.joseph-mestrallet.com/file/si2312306/IMG_6074-fi35655370x2000.JPG')",
+          backgroundImage: "url('/images/IMG_6074-fi35655370x2000.JPG')",
           backgroundSize: 'cover',
           backgroundPosition: 'center bottom',
           backgroundColor: 'rgba(255, 255, 255, 0)'
@@ -79,7 +79,7 @@ const ProjectsPage: React.FC = () => {
       >
         <div className="absolute inset-0 bg-black bg-opacity-26"></div>
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white uppercase tracking-wide">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white uppercase tracking-wide font-sans">
             Main Projects & Experience
           </h1>
           <p className="text-xl text-white mb-8 max-w-3xl mx-auto">
@@ -97,7 +97,7 @@ const ProjectsPage: React.FC = () => {
                 key={index}
                 className="flex items-start space-x-6 p-8 bg-white text-black rounded-lg shadow-sm hover:shadow-md transition-shadow"
                 style={{
-                  backgroundImage: index % 3 === 1 ? "url('https://www.joseph-mestrallet.com/file/si2312306/IMG_6074-fi35655370x2000.JPG')" : "none",
+                  backgroundImage: index % 3 === 1 ? "url('/images/IMG_6074-fi35655370x2000.JPG')" : "none",
                   backgroundSize: 'cover',
                   backgroundPosition: 'center center',
                   backgroundColor: index % 3 === 1 ? 'rgba(0, 0, 0, 0)' : 'white'

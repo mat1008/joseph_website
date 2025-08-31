@@ -3,15 +3,24 @@ import { Link } from 'react-router-dom';
 
 const PhysiologicalTestingPage: React.FC = () => {
   return (
-    <div className="pt-24 pb-16 bg-dark-bg text-white">
+    <div className="pt-24 pb-16 bg-dark-bg text-white font-sans">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-4">
           <Link to="/services" className="inline-flex items-center text-accent hover:text-accent-light font-semibold">← Back to Services</Link>
         </div>
-        <header className="text-center mb-10">
+        <header className="text-center mb-10 font-sans">
           <h1 className="text-5xl font-bold mb-2">Physiological Testing</h1>
           <p className="text-xl text-gray-300">To make you the best, we need data</p>
         </header>
+
+        <div className="mb-8">
+          <img
+            src="/images/IMG_0001%20copie-fi35702592x2000.JPG"
+            alt="Physiological testing lab setup"
+            className="w-full h-[24rem] object-cover rounded-lg shadow-lg"
+            loading="lazy"
+          />
+        </div>
 
         <section className="mb-8">
           <h2 className="text-3xl font-bold mb-3">Our protocols</h2>
@@ -79,43 +88,43 @@ const PhysiologicalTestingPage: React.FC = () => {
           <p className="text-gray-400 mb-6">Soon an Enduraw article for each sensor (you can access the websites by clicking on the logos).</p>
           <div className="grid md:grid-cols-3 gap-6">
             <a href="https://vo2master.com/" target="_blank" rel="noreferrer" className="bg-dark-secondary rounded-lg p-6 flex flex-col items-center hover:bg-gray-700/40 transition-colors">
-              <img src="https://www.joseph-mestrallet.com/file/si2312306/vo2_master_-_dc_-_main_left_-_full_colour_-_transparent.png__664x0_q85_subsampling-2.png" alt="VO2master analyzer" className="h-12 object-contain mb-3" loading="lazy" />
+              <img src="/images/vo2_master_-_dc_-_main_left_-_full_colour_-_transparent.png__664x0_q85_subsampling-2-fi35703783x310.png" alt="VO2master analyzer" className="h-12 object-contain mb-3" loading="lazy" />
               <h4 className="text-lg font-semibold">VO2master analyzer</h4>
               <p className="text-gray-300 text-sm">VO2, VE, FeO2, EqO2</p>
               <p className="text-gray-400 text-xs">In partnership with Mauna.ai</p>
             </a>
             <a href="https://mauna.ai/" target="_blank" rel="noreferrer" className="bg-dark-secondary rounded-lg p-6 flex flex-col items-center hover:bg-gray-700/40 transition-colors">
-              <img src="https://www.joseph-mestrallet.com/file/si2312306/ai_mauna_logo.png" alt="Mauna.ai" className="h-10 object-contain mb-3" loading="lazy" />
+              <img src="/images/ai_mauna_logo-fi35703946x130.png" alt="Mauna.ai" className="h-10 object-contain mb-3" loading="lazy" />
               <h4 className="text-lg font-semibold">Mauna.ai</h4>
               <p className="text-gray-300 text-sm">AI-driven performance insights</p>
             </a>
             <a href="https://www.polar.com/en/products/accessories/h10_heart_rate_sensor" target="_blank" rel="noreferrer" className="bg-dark-secondary rounded-lg p-6 flex flex-col items-center hover:bg-gray-700/40 transition-colors">
-              <img src="https://www.joseph-mestrallet.com/file/si2312306/polar-logo.png" alt="Polar H10" className="h-10 object-contain mb-3" loading="lazy" />
+              <img src="/images/polar-logo-fi35703774x170.png" alt="Polar H10" className="h-10 object-contain mb-3" loading="lazy" />
               <h4 className="text-lg font-semibold">Polar H10</h4>
               <p className="text-gray-300 text-sm">Heart Rate, RR, HRV</p>
             </a>
             <a href="https://trainred.com/" target="_blank" rel="noreferrer" className="bg-dark-secondary rounded-lg p-6 flex flex-col items-center hover:bg-gray-700/40 transition-colors">
-              <img src="https://www.joseph-mestrallet.com/file/si2312306/TrainRed-logo-2.png" alt="Train.Red FYER" className="h-10 object-contain mb-3" loading="lazy" />
+              <img src="/images/TrainRed-logo-2-fi35703796x130.png" alt="Train.Red FYER" className="h-10 object-contain mb-3" loading="lazy" />
               <h4 className="text-lg font-semibold">Train.Red FYER</h4>
               <p className="text-gray-300 text-sm">Muscle oxygen (TSI, HbDiff)</p>
             </a>
             <a href="https://corebodytemp.com/" target="_blank" rel="noreferrer" className="bg-dark-secondary rounded-lg p-6 flex flex-col items-center hover:bg-gray-700/40 transition-colors">
-              <img src="https://www.joseph-mestrallet.com/file/si2312306/Core-logo.png" alt="Core Body Temperature" className="h-10 object-contain mb-3" loading="lazy" />
+              <img src="/images/Core-logo-fi35703773x100.png" alt="Core Body Temperature" className="h-10 object-contain mb-3" loading="lazy" />
               <h4 className="text-lg font-semibold">Core Body Temperature</h4>
               <p className="text-gray-300 text-sm">Body and skin temperature</p>
             </a>
             <a href="https://www.stryd.com/" target="_blank" rel="noreferrer" className="bg-dark-secondary rounded-lg p-6 flex flex-col items-center hover:bg-gray-700/40 transition-colors">
-              <img src="https://www.joseph-mestrallet.com/file/si2312306/stryd.png" alt="Stryd Pod" className="h-10 object-contain mb-3" loading="lazy" />
+              <img src="/images/stryd-fi35703791x200.png" alt="Stryd Pod" className="h-10 object-contain mb-3" loading="lazy" />
               <h4 className="text-lg font-semibold">Stryd pod</h4>
               <p className="text-gray-300 text-sm">Cadence, GCT, flight time, stride length</p>
             </a>
             <a href="https://www.supersapiens.com/" target="_blank" rel="noreferrer" className="bg-dark-secondary rounded-lg p-6 flex flex-col items-center hover:bg-gray-700/40 transition-colors">
-              <img src="https://www.joseph-mestrallet.com/file/si2312306/5e3782b4-f6d8-434b-a5ec-a6459473a619.png" alt="Supersapiens" className="h-10 object-contain mb-3" loading="lazy" />
+              <img src="/images/5e3782b4-f6d8-434b-a5ec-a6459473a619-fi35703631x150.png" alt="Supersapiens" className="h-10 object-contain mb-3" loading="lazy" />
               <h4 className="text-lg font-semibold">Supersapiens sensor</h4>
               <p className="text-gray-300 text-sm">Glucose level</p>
             </a>
             <a href="https://www.nixbiosensors.com/" target="_blank" rel="noreferrer" className="bg-dark-secondary rounded-lg p-6 flex flex-col items-center hover:bg-gray-700/40 transition-colors">
-              <img src="https://www.joseph-mestrallet.com/file/si2312306/Nix-logo.png" alt="Nix patch" className="h-10 object-contain mb-3" loading="lazy" />
+              <img src="/images/Nix-logo-fi35703775x110.png" alt="Nix patch" className="h-10 object-contain mb-3" loading="lazy" />
               <h4 className="text-lg font-semibold">Nix patch</h4>
               <p className="text-gray-300 text-sm">Sweat loss, Electrolytes loss</p>
             </a>

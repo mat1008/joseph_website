@@ -4,12 +4,12 @@ import PersonCard from '../../components/PersonCard';
 
 const StravaIntegrationPage: React.FC = () => {
   return (
-    <div className="pt-24 pb-16 bg-dark-bg text-white">
+    <div className="pt-24 pb-16 bg-dark-bg text-white font-sans">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-4">
           <Link to="/services" className="inline-flex items-center text-accent hover:text-accent-light font-semibold">← Back to Services</Link>
         </div>
-        <header className="text-center mb-12">
+        <header className="text-center mb-12 font-sans">
           <h1 className="text-5xl font-bold mb-2">Enduraw Report</h1>
           <p className="text-xl text-gray-300">A Strava Integration</p>
           <p className="text-lg text-gray-400 mt-2">The best sports algorithms for all your runs!</p>
@@ -17,30 +17,57 @@ const StravaIntegrationPage: React.FC = () => {
 
         <div className="flex flex-wrap items-center justify-center gap-6 mb-10">
           <img
-            src="https://www.joseph-mestrallet.com/file/si2312306/strava_logo-fi35603244x260.png"
+            src="/images/strava_logo-fi35603244x260.png"
             alt="Strava logo"
-            className="h-10 object-contain"
+            className="h-20 object-contain"
             loading="lazy"
           />
           <img
-            src="https://www.joseph-mestrallet.com/file/si2312306/logo_enduraw%20blanc.png"
+            src="/images/logo_enduraw%20blanc-fi35471045x140.png"
             alt="Enduraw logo"
-            className="h-10 object-contain"
+            className="h-20 object-contain"
             loading="lazy"
           />
         </div>
 
-        <section className="mb-10 space-y-4 text-gray-200">
-          <p>
-            You can't accelerate under 29 degrees? You thought you had a good pace, but with that
-            100-meter bump, it's impossible to know? How much speed has the wind taken away from you
-            on this race?
-          </p>
-          <p>That's to be expected. Outside conditions reduce your pace. 🥵 💨</p>
-          <p>
-            But it's impossible to know how much. Whether it's the wind, the elevation gain, the
-            temperature or the altitude, it's impossible to know your true state of fitness.
-          </p>
+        {/* Problem statement + sample report side-by-side */}
+        <section className="mb-12 grid gap-8 md:grid-cols-2 items-start">
+          {/* Left: portrait sample screenshot */}
+          <div className="order-2 md:order-1">
+            <img
+              src="/images/IMG_2313-fi35687493x330.PNG"
+              alt="Enduraw Report sample screenshot"
+              className="w-full rounded-lg border border-gray-800"
+              loading="lazy"
+            />
+          </div>
+
+          {/* Right: text */}
+          <div className="order-1 md:order-2 space-y-4 text-gray-200">
+            <p>
+              You can't accelerate under 29 degrees? You thought you had a good pace, but with that
+              100-meter bump, it's impossible to know? How much speed has the wind taken away from you
+              on this race?
+            </p>
+            <p>That's to be expected. Outside conditions reduce your pace. 🥵 💨</p>
+            <p>
+              But it's impossible to know how much. Whether it's the wind, the elevation gain, the
+              temperature or the altitude, it's impossible to know your true state of fitness.
+            </p>
+            <p>
+              Enduraw has the solution! We're putting at your disposal the formulas we've developed
+              with elite athletes to enable you to compare your training and more accurately estimate
+              the intensity of your session. 📈
+            </p>
+            <p>
+              After each outing, our integration will automatically update your activity with the
+              paces adjusted to the conditions. Our API calls retrieve wind strength, outside
+              temperature and your pace and altitude data a few seconds after the end of your run!
+            </p>
+            <p>
+              So you get an instant report and the time you would have saved in normal conditions 🎉
+            </p>
+          </div>
         </section>
 
         <section className="mb-12 grid gap-6 sm:grid-cols-2">
@@ -54,30 +81,7 @@ const StravaIntegrationPage: React.FC = () => {
           </div>
         </section>
 
-        <div className="mb-10">
-          <img
-            src="https://www.joseph-mestrallet.com/file/si2312306/IMG_2313.PNG"
-            alt="Enduraw Report sample screenshot"
-            className="w-full rounded-lg border border-gray-800"
-            loading="lazy"
-          />
-        </div>
-
-        <section className="mb-10 space-y-4 text-gray-200">
-          <p>
-            Enduraw has the solution! We're putting at your disposal the formulas we've developed
-            with elite athletes to enable you to compare your training and more accurately estimate
-            the intensity of your session. 📈
-          </p>
-          <p>
-            After each outing, our integration will automatically update your activity with the
-            paces adjusted to the conditions. Our API calls retrieve wind strength, outside
-            temperature and your pace and altitude data a few seconds after the end of your run!
-          </p>
-          <p>
-            So you get an instant report and the time you would have saved in normal conditions 🎉
-          </p>
-        </section>
+        {/* Moved the explanatory text next to the image above */}
 
         <div className="mb-12 text-center">
           <button
@@ -126,7 +130,7 @@ const StravaIntegrationPage: React.FC = () => {
               job="Software Engineer"
               sports="Triathlon"
               credentials="X - Cambridge"
-              imageUrl="https://www.joseph-mestrallet.com/file/si2312306/alodie2.png"
+              imageUrl="/images/alodie2-fi35697586x210.png"
             />
             <PersonCard
               fullName="Joseph Mestrallet"
@@ -134,7 +138,7 @@ const StravaIntegrationPage: React.FC = () => {
               job="Performance Scientist"
               sports="Trail Running"
               credentials="X-HEC Berkeley ENSEA"
-              imageUrl="https://www.joseph-mestrallet.com/file/si2312306/joseph.png"
+              imageUrl="/images/joseph-fi35687529x212.png"
             />
           </div>
         </section>

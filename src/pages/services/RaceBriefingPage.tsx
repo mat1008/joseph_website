@@ -4,12 +4,12 @@ import PersonCard from '../../components/PersonCard';
 
 const RaceBriefingPage: React.FC = () => {
   return (
-    <div className="pt-24 pb-16 bg-dark-bg text-white">
+    <div className="pt-24 pb-16 bg-dark-bg text-white font-sans">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-4">
           <Link to="/services" className="inline-flex items-center text-accent hover:text-accent-light font-semibold">← Back to Services</Link>
         </div>
-        <header className="text-center mb-10">
+        <header className="text-center mb-10 font-sans">
           <h1 className="text-5xl font-bold mb-2">Race Briefing</h1>
           <p className="text-xl text-gray-300">Enduraw provides race briefings for the best athletes in the world.</p>
           <p className="text-lg text-gray-400">Why not you?</p>
@@ -81,45 +81,43 @@ const RaceBriefingPage: React.FC = () => {
 
         <section className="mb-8">
           <h3 className="text-2xl font-semibold mb-3">They trust us!</h3>
-          <div className="grid md:grid-cols-2 gap-4 text-gray-200">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 text-gray-200">
             <PersonCard
               fullName="Petter Engdahl"
               age={29}
               country="Sweden 🇸🇪"
               sports="Trail, Ultra Trail"
               achievements="CCC: win, record • Transvulcania win • MMB: 3rd"
-              imageUrl="https://www.joseph-mestrallet.com/file/si2312306/petter.png"
+              variant="athlete"
             />
             <PersonCard
               fullName="Ruth Croft"
               country="New Zealand 🇳🇿"
               sports="Trail, Ultra Trail"
               achievements="UTMB 2023 • UTMB 2024"
-              imageUrl="https://www.joseph-mestrallet.com/file/si2312306/Ruth.png"
+              variant="athlete"
             />
             <PersonCard
               fullName="Duncan Périllat"
               country="France 🇫🇷"
               sports="Marathon, Ultra Trail"
               achievements="Rotterdam Marathon • UTMB 2023"
-              imageUrl="https://www.joseph-mestrallet.com/file/si2312306/Duncan2.png"
+              variant="athlete"
             />
             <PersonCard
               fullName="Solange Jésus"
               country="Portugal 🇵🇹"
               sports="Road Marathon"
               achievements="Paris Marathon: 9th • World championship • NYC Marathon"
-              imageUrl="https://www.joseph-mestrallet.com/file/si2312306/solange.png"
+              variant="athlete"
             />
-            <div className="md:col-span-2">
-              <PersonCard
-                fullName="Guillaume Adam"
-                country="France 🇫🇷"
-                sports="Road Marathon"
-                achievements="NYC Marathon"
-                imageUrl="https://www.joseph-mestrallet.com/file/si2312306/guillaumeadam.png"
-              />
-            </div>
+            <PersonCard
+              fullName="Guillaume Adam"
+              country="France 🇫🇷"
+              sports="Road Marathon"
+              achievements="NYC Marathon"
+              variant="athlete"
+            />
           </div>
         </section>
 

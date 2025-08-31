@@ -51,18 +51,16 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
   return (
     <div className="bg-dark-bg text-white">
       {/* Intro */}
-      <section ref={(el) => { sectionRefs.current['overview'] = el; }} className="pt-24 pb-8">
+      <section ref={(el) => { sectionRefs.current['overview'] = el; }} className="pt-24 pb-8 font-sans">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-5xl font-bold mb-6">Enduraw services</h1>
             <div className="text-xl text-gray-300 max-w-3xl mx-auto space-y-4">
               <p>
-                Building on two years of expertise in data for performance, Enduraw has become the
-                Race Day leading expert.
+                Building on two years of expertise in data for performance, Enduraw has become the leading expert for Race Day.
               </p>
               <p>
-                We support elite athletes in their quest for record-breaking performance. We're also
-                committed by providing products that enable everyone to use our algorithms.
+                We support elite athletes in their quest for record-breaking performance. We're also committed to provide products enabling everyone to use our algorithms.
               </p>
             </div>
           </div>
@@ -70,49 +68,54 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
       </section>
 
       {/* Elite Athletes - Hero */}
-      <section id="elite-athletes" ref={(el) => { sectionRefs.current['elite-athletes'] = el; }} className="py-20 bg-gradient-to-b from-dark-bg to-dark-secondary/30">
+      <section id="elite-athletes" ref={(el) => { sectionRefs.current['elite-athletes'] = el; }} className="py-20 bg-gradient-to-b from-dark-bg to-dark-secondary/30 font-sans">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-10">
             <h2 className="text-5xl font-extrabold mb-4">For elite athletes</h2>
             <p className="text-lg text-gray-200">Our DNA is high level performance.</p>
           </div>
 
-          <img
-            src="https://www.joseph-mestrallet.com/file/si2312306/IMG_6392.JPG"
-            alt="Elite athlete training with Enduraw"
-            className="w-full h-[24rem] object-cover rounded-lg shadow-lg"
-            loading="lazy"
-          />
-          <div>
-            <p className="text-gray-200 mb-4">
-              Enduraw uses its unique expertise at the frontier between mathematical mastery and
-              knowledge of top-level sport to go after marginal gains.
-            </p>
-            <p className="text-gray-200 mb-4">
-              Thanks to our experience with the world's best athletes and our collaboration with
-              the most advanced brands in sports technology, we have become the experts in Race Day
-              for endurance sports.
-            </p>
-            <p className="text-gray-200 mb-4">
-              Preparation for an UTMB (race briefing, pacing according to your qualities, outdoor
-              conditions, competitor analysis, race strategy, nutrition strategy, etc.) nothing is
-              left to chance.
-            </p>
-            <p className="text-gray-200 mb-6">
-              Do you want to do everything possible to beat an FKT or a world record? Don't
-              hesitate to call on us!
-            </p>
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            <div>
+              <img
+                src="/images/IMG_6392-fi35603540x381.JPG"
+                alt="Elite athlete training with Enduraw"
+                className="w-full h-[28rem] object-cover rounded-lg shadow-lg"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <p className="text-gray-200 mb-4">
+                Enduraw uses its unique expertise at the frontier between mathematical mastery and
+                knowledge of top-level sport to go after marginal gains.
+              </p>
+              <p className="text-gray-200 mb-4">
+                Thanks to our experience with the world's best athletes and our collaboration with
+                the most advanced brands in sports technology, we have become the experts in Race Day
+                for endurance sports.
+              </p>
+              <p className="text-gray-200 mb-4">
+                Preparation for an UTMB (race briefing, pacing according to your qualities, outdoor
+                conditions, competitor analysis, race strategy, nutrition strategy, etc.) nothing is
+                left to chance.
+              </p>
+              <p className="text-gray-200 mb-6">
+                Do you want to do everything possible to beat an FKT or a world record? Don't
+                hesitate to call on us!
+              </p>
+            </div>
           </div>
           <div>
             <h3 className="text-2xl font-semibold mb-4">Our Athletes</h3>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
               <PersonCard
                 fullName="Petter Engdahl"
                 age={29}
                 country="Sweden 🇸🇪"
                 sports="Trail, Ultra Trail"
                 achievements="CCC (UTMB) winner, record • Transvulcania winner"
-                imageUrl="https://www.joseph-mestrallet.com/file/si2312306/petter.png"
+                imageUrl="/images/petter-fi35687434x285.png"
+                variant="athlete"
               />
               <PersonCard
                 fullName="Duncan Périllat"
@@ -120,7 +123,8 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
                 country="France 🇫🇷"
                 sports="Marathon, Ultra Trail"
                 achievements="French marathon champion • UTMB St Jacques winner"
-                imageUrl="https://www.joseph-mestrallet.com/file/si2312306/Duncan2.png"
+                imageUrl="/images/Duncan2-fi35687444x236.png"
+                variant="athlete"
               />
               <PersonCard
                 fullName="Ruth Croft"
@@ -128,7 +132,8 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
                 country="New Zealand 🇳🇿"
                 sports="Trail, Ultra Trail"
                 achievements="CCC, Western States winner • Vice world champion"
-                imageUrl="https://www.joseph-mestrallet.com/file/si2312306/Ruth.png"
+                imageUrl="/images/Ruth-fi35687447x220.png"
+                variant="athlete"
               />
               <PersonCard
                 fullName="Laurent Derain"
@@ -136,7 +141,8 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
                 country="France 🇫🇷"
                 sports="Cycling, Time Trial"
                 achievements="Master World Champion • French Hour Record attempt"
-                imageUrl="https://www.joseph-mestrallet.com/file/si2312306/Laurent.png"
+                imageUrl="/images/Laurent-fi35687451x160.png"
+                variant="athlete"
               />
             </div>
           </div>
@@ -157,7 +163,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
       </section>
 
       {/* For all athletes - Hero */}
-      <section ref={(el) => { sectionRefs.current['for-all-athletes'] = el; }} className="py-20 bg-dark-secondary">
+      <section ref={(el) => { sectionRefs.current['for-all-athletes'] = el; }} className="py-20 bg-dark-secondary font-sans">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-10">
             <h2 className="text-5xl font-extrabold mb-4">For all athletes</h2>
