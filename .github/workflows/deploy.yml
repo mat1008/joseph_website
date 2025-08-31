@@ -1,0 +1,75 @@
+name: Deploy React (Tailwind) to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # If you use yarn/pnpm, replace with the relevant install command
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm i; fi
+
+      # Your build should already run Tailwind via PostCSS or your scripts
+      - name: Build
+        run: npm run build
+
+      # Detect output folder: Vite -> dist, CRA -> build
+      - name: Detect build dir
+        id: detect
+        run: |
+          if [ -d "dist" ]; then
+            echo "dir=dist" >> "$GITHUB_OUTPUT"
+          elif [ -d "build" ]; then
+            echo "dir=build" >> "$GITHUB_OUTPUT"
+          else
+            echo "No dist/ or build/ directory found after build" >&2
+            exit 1
+          fi
+
+      # SPA fallback so deep links don’t 404 on GitHub Pages
+      - name: Add SPA fallback (404.html)
+        run: |
+          cp "${{ steps.detect.outputs.dir }}/index.html" "${{ steps.detect.outputs.dir }}/404.html"
+
+      # Prevent Jekyll from altering static assets
+      - name: Disable Jekyll
+        run: |
+          touch "${{ steps.detect.outputs.dir }}/.nojekyll"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ steps.detect.outputs.dir }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
