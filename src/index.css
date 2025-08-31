@@ -11,6 +11,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Ensure over-scroll rubber band shows dark background instead of white */
+html, body {
+  background-color: #0a0a0a; /* matches theme dark-bg */
+  color-scheme: dark;
+}
+
 /* Continuous marquee-style logo scrollers */
 @keyframes scroll-left {
   0% { transform: translateX(0); }

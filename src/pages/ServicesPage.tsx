@@ -157,7 +157,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
       </section>
 
       {/* For all athletes - Hero */}
-      <section className="py-20 bg-dark-secondary">
+      <section ref={(el) => { sectionRefs.current['for-all-athletes'] = el; }} className="py-20 bg-dark-secondary">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-10">
             <h2 className="text-5xl font-extrabold mb-4">For all athletes</h2>
