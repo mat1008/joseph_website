@@ -6,9 +6,13 @@ const RaceBriefingPage: React.FC = () => {
   return (
     <div className="pt-24 pb-16 bg-dark-bg text-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-4">
+          <Link to="/services" className="inline-flex items-center text-accent hover:text-accent-light font-semibold">← Back to Services</Link>
+        </div>
         <header className="text-center mb-10">
           <h1 className="text-5xl font-bold mb-2">Race Briefing</h1>
-          <p className="text-xl text-gray-300">Enduraw provides race briefings for the best athletes in the world.<br></br>Why not to you?</p>
+          <p className="text-xl text-gray-300">Enduraw provides race briefings for the best athletes in the world.</p>
+          <p className="text-lg text-gray-400">Why not you?</p>
         </header>
 
         <section className="mb-8 space-y-4 text-gray-200">
@@ -139,9 +143,7 @@ const RaceBriefingPage: React.FC = () => {
           <p className="text-accent mt-2">If you are interested, drop me a message here.</p>
         </section>
 
-        <div className="mt-12 text-center">
-          <Link to="/services" className="text-accent hover:text-accent-light">← Back to Services</Link>
-        </div>
+        
       </div>
     </div>
   );

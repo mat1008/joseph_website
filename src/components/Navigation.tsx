@@ -55,36 +55,34 @@ const Navigation: React.FC<NavigationProps> = ({ onScrollToSection }) => {
                 mainHideTimer.current = window.setTimeout(() => setShowMainSections(false), 120);
               }}
             >
-              <Link
-                to="/"
-                className={`relative z-20 inline-flex justify-center text-gray-200 hover:text-white hover:bg-white/10 px-3 py-2 text-base font-semibold transition-colors ${location.pathname === '/' ? 'text-white' : ''
-                  }`}
-                style={{ width: MENU_WIDTH }}
-              >
-                Home
-              </Link>
+              {/* Reserve space in navbar row so the absolute dropdown can sit over it */}
+              <div className="h-10" style={{ width: MENU_WIDTH }} />
 
-              {/* No overlay behind trigger; dropdown unrolls below */}
-
-              {/* Dropdown items below trigger; square corners; borders are the white lines */}
-              <div className="absolute left-1/2 -translate-x-1/2 top-full z-10" style={{ width: MENU_WIDTH }}>
-                <div
-                  className={`origin-top transform transition-transform duration-200 ${showMainSections ? 'scale-y-100 pointer-events-auto' : 'scale-y-0 pointer-events-none'
-                    } border-l-2 border-r-2 border-b-2 border-white bg-dark-secondary/95 py-2`}
-                >
-                  {mainSections.map((section) => (
-                    <button
-                      key={section.id}
-                      onClick={() => {
-                        onScrollToSection?.(section.id);
-                        if (location.pathname !== '/') navigate('/');
-                        setShowMainSections(false);
-                      }}
-                      className="block w-full px-6 py-3 text-base font-semibold text-gray-200 hover:bg-white hover:text-black text-center transition-colors"
-                    >
-                      {section.name}
-                    </button>
-                  ))}
+              {/* Dropdown panel contains the trigger at top and unrolls below */}
+              <div className="absolute left-1/2 -translate-x-1/2 top-0 z-20" style={{ width: MENU_WIDTH }}>
+                <div className={`${showMainSections ? 'border-l-2 border-r-2' : ''} border-gray-500 bg-gray-800`}>
+                  <Link
+                    to="/"
+                    className={`block w-full px-6 py-3 text-base font-semibold text-gray-200 ${showMainSections ? 'bg-gray-800' : 'bg-black'} hover:bg-white hover:text-black text-center transition-colors ${location.pathname === '/' ? 'text-white' : ''}`}
+                    onClick={() => setShowMainSections(false)}
+                  >
+                    Home
+                  </Link>
+                  <div className={`overflow-hidden transition-all duration-200 ease-out ${showMainSections ? 'max-h-[1000px] pt-2' : 'max-h-0'}`}>
+                    {mainSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => {
+                          onScrollToSection?.(section.id);
+                          if (location.pathname !== '/') navigate('/');
+                          setShowMainSections(false);
+                        }}
+                        className="block w-full px-6 py-3 text-base font-semibold text-gray-200 hover:bg-white hover:text-black text-center transition-colors"
+                      >
+                        {section.name}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -101,60 +99,58 @@ const Navigation: React.FC<NavigationProps> = ({ onScrollToSection }) => {
                 servicesHideTimer.current = window.setTimeout(() => setShowServicesSections(false), 120);
               }}
             >
-              <Link
-                to="/services"
-                className={`relative z-20 inline-flex justify-center text-gray-200 hover:text-white hover:bg-white/10 px-3 py-2 text-base font-semibold transition-colors ${location.pathname === '/services' ? 'text-white' : ''
-                  }`}
-                style={{ width: MENU_WIDTH }}
-              >
-                Services
-              </Link>
+              {/* Reserve space in navbar row so the absolute dropdown can sit over it */}
+              <div className="h-10" style={{ width: MENU_WIDTH }} />
 
-              {/* No overlay behind trigger; dropdown unrolls below */}
+              {/* Dropdown panel contains the trigger at top and unrolls below */}
+              <div className="absolute left-1/2 -translate-x-1/2 top-0 z-20" style={{ width: MENU_WIDTH }}>
+                <div className={`${showServicesSections ? 'border-l-2 border-r-2' : ''} border-gray-500 bg-gray-800`}>
+                  <Link
+                    to="/services"
+                    className={`block w-full px-6 py-3 text-base font-semibold text-gray-200 ${showServicesSections ? 'bg-gray-800' : 'bg-black'} hover:bg-white hover:text-black text-center transition-colors ${location.pathname === '/services' ? 'text-white' : ''}`}
+                    onClick={() => setShowServicesSections(false)}
+                  >
+                    Services
+                  </Link>
+                  <div className={`overflow-hidden transition-all duration-200 ease-out ${showServicesSections ? 'max-h-[1000px] pt-2' : 'max-h-0'}`}>
+                    {servicesSections.map((section) => {
+                      const directLink =
+                        section.id === 'strava-integration'
+                          ? '/services/strava-integration'
+                          : section.id === 'race-briefing'
+                            ? '/services/race-briefing'
+                            : section.id === 'physiological-testing'
+                              ? '/services/physiological-testing'
+                              : null;
 
-              {/* Dropdown items below trigger; square corners; borders are the white lines */}
-              <div className="absolute left-1/2 -translate-x-1/2 top-full z-10" style={{ width: MENU_WIDTH }}>
-                <div
-                  className={`origin-top transform transition-transform duration-200 ${showServicesSections ? 'scale-y-100 pointer-events-auto' : 'scale-y-0 pointer-events-none'
-                    } border-l-2 border-r-2 border-b-2 border-white bg-dark-secondary/95 py-2`}
-                >
-                  {servicesSections.map((section) => {
-                    const directLink =
-                      section.id === 'strava-integration'
-                        ? '/services/strava-integration'
-                        : section.id === 'race-briefing'
-                          ? '/services/race-briefing'
-                          : section.id === 'physiological-testing'
-                            ? '/services/physiological-testing'
-                            : null;
+                      if (directLink) {
+                        return (
+                          <Link
+                            key={section.id}
+                            to={directLink}
+                            onClick={() => setShowServicesSections(false)}
+                            className="block w-full px-6 py-3 text-base font-semibold text-gray-200 hover:bg-white hover:text-black text-center transition-colors"
+                          >
+                            {section.name}
+                          </Link>
+                        );
+                      }
 
-                    if (directLink) {
                       return (
-                        <Link
+                        <button
                           key={section.id}
-                          to={directLink}
-                          onClick={() => setShowServicesSections(false)}
+                          onClick={() => {
+                            onScrollToSection?.(section.id);
+                            if (location.pathname !== '/services') navigate('/services');
+                            setShowServicesSections(false);
+                          }}
                           className="block w-full px-6 py-3 text-base font-semibold text-gray-200 hover:bg-white hover:text-black text-center transition-colors"
                         >
                           {section.name}
-                        </Link>
+                        </button>
                       );
-                    }
-
-                    return (
-                      <button
-                        key={section.id}
-                        onClick={() => {
-                          onScrollToSection?.(section.id);
-                          if (location.pathname !== '/services') navigate('/services');
-                          setShowServicesSections(false);
-                        }}
-                        className="block w-full px-6 py-3 text-base font-semibold text-gray-200 hover:bg-white hover:text-black text-center transition-colors"
-                      >
-                        {section.name}
-                      </button>
-                    );
-                  })}
+                    })}
+                  </div>
                 </div>
               </div>
             </div>

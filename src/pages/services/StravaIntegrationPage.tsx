@@ -6,6 +6,9 @@ const StravaIntegrationPage: React.FC = () => {
   return (
     <div className="pt-24 pb-16 bg-dark-bg text-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-4">
+          <Link to="/services" className="inline-flex items-center text-accent hover:text-accent-light font-semibold">← Back to Services</Link>
+        </div>
         <header className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-2">Enduraw Report</h1>
           <p className="text-xl text-gray-300">A Strava Integration</p>
@@ -136,9 +139,7 @@ const StravaIntegrationPage: React.FC = () => {
           </div>
         </section>
 
-        <div className="mt-12 text-center">
-          <Link to="/services" className="text-accent hover:text-accent-light">← Back to Services</Link>
-        </div>
+        
       </div>
     </div>
   );

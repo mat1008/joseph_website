@@ -17,8 +17,7 @@ const Footer: React.FC = () => {
 
         {/* Contact Information */}
         <div className="mb-8 text-white" style={{ fontFamily: 'Montserrat' }}>
-          <p>330 route du plagnolet<br />74400 Chamonix</p>
-          <p>France</p>
+          <p>330 route du plagnolet | 74400 Chamonix | France</p>
           <p>+33 6 95 84 65 29</p>
         </div>
 
