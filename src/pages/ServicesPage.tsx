@@ -148,8 +148,8 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
           </div>
 
           <div className="mt-6 p-5 bg-dark-bg/60 border border-gray-700 rounded-md">
-            <h3 className="text-2xl font-semibold mb-1">Sorry, it's closed</h3>
-            <p className="text-gray-400">Athlete promotion complete for 2024</p>
+            <h3 className="text-2xl font-semibold mb-1"><i>Sorry, we're at full capcity</i></h3>
+            <p className="text-gray-400">Our athlete promotion is complete for 2024!</p>
             <p className="text-gray-200 mt-2">
               Feel free to leave us a message for 2025 below, or discover our race briefings.
             </p>
@@ -171,13 +171,54 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {offerings.map((o) => (
-              <div key={o.id} id={o.id} ref={(el) => { sectionRefs.current[o.id] = el; }} className="bg-dark-bg rounded-lg p-6 flex flex-col">
+              <div
+                key={o.id}
+                id={o.id}
+                ref={(el) => {
+                  sectionRefs.current[o.id] = el;
+                }}
+                className="bg-dark-bg rounded-lg p-6 flex flex-col"
+              >
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-2xl font-bold">{o.title}</h3>
-                  <span className="text-accent font-semibold">{o.price}</span>
+                  <div className="flex items-center gap-2">
+                    {o.id === 'strava-integration' && (
+                      <img
+                        src="/images/strava_logo-fi35603244x140.png"
+                        alt="Strava logo"
+                        className="h-6 w-auto"
+                        loading="lazy"
+                      />
+                    )}
+                    <h3 className="text-2xl font-bold">{o.title}</h3>
+                  </div>
+                  <span
+                    className={`${o.id === 'strava-integration' ? '' : 'text-accent'} font-semibold`}
+                    style={
+                      o.id === 'strava-integration'
+                        ? { color: '#fc4c02' }
+                        : o.id === 'physiological-testing'
+                          ? { color: '#8b5cf6' }
+                          : undefined
+                    }
+                  >
+                    {o.price}
+                  </span>
                 </div>
                 <p className="text-gray-300 mb-5 flex-1">{o.description}</p>
-                <Link to={o.to} className="inline-block bg-accent hover:bg-accent-light text-white px-5 py-2 rounded-md font-semibold text-center">
+                <Link
+                  to={o.to}
+                  className={`inline-block ${o.id === 'strava-integration' || o.id === 'physiological-testing'
+                    ? ''
+                    : 'bg-accent hover:bg-accent-light'
+                    } text-white px-5 py-2 rounded-md font-semibold text-center`}
+                  style={
+                    o.id === 'strava-integration'
+                      ? { backgroundColor: '#fc4c02' }
+                      : o.id === 'physiological-testing'
+                        ? { backgroundColor: '#8b5cf6' }
+                        : undefined
+                  }
+                >
                   {o.cta}
                 </Link>
               </div>

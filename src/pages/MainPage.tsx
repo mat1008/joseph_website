@@ -13,30 +13,30 @@ const PROJECTS: ProjectItem[] = [
   {
     title: 'UTMB 2023',
     description: "Management of Ruth Croft and Duncan Périllat's pacing and nutrition plan",
-              image: '/images/IMG_7658-fi35603242x140.JPG',
+    image: '/images/IMG_7658-fi35603242x140.JPG',
   },
   {
     title: 'Norseman 2023',
     description: "Accompanying and supporting Margaux Gressé on the Norseman, the world's toughest triathlon in Norway",
-              image: '/images/IMG_6273-fi35603238x140.jpg',
+    image: '/images/IMG_6273-fi35603238x140.jpg',
     link: 'http://www.linkedin.com/pulse/2023-norseman-joseph-mestrallet%3FtrackingId=s0TXDDKBGQKiVmp8K3iJUw%253D%253D/?trackingId=s0TXDDKBGQKiVmp8K3iJUw%3D%3D'
   },
   {
     title: 'UTMB 2023',
     description: "Preparation of data insights on the leaders for live video on the l'Équipe channel and enhance the spectator experience",
-              image: '/images/Singap2-fi35603565x186.jpeg',
+    image: '/images/Singap2-fi35603565x186.jpeg',
     link: 'http://www.linkedin.com/posts/joseph-mestrallet-770279a7_utmb-2023-activity-7105151047119028224--YOu?utm_source=share&utm_medium=member_desktop'
   },
   {
     title: 'CCC et Transvulcania by UTMB 2022',
     description: "Petter Engdahl's race briefing to ensure his pacing plan is based on his energy expenditure and particular abilities. 2 wins and one race record",
-              image: '/images/petter-fi35603243x210.jpg',
+    image: '/images/petter-fi35603243x210.jpg',
     link: 'http://medium.com/p/e03fcf77bdbb'
   },
   {
     title: 'Strava integration',
     description: 'Launch of a Strava integration with Alodie Boissonet to normalize running speeds according to outdoor conditions.',
-              image: '/images/strava_logo-fi35603244x140.png',
+    image: '/images/strava_logo-fi35603244x140.png',
     link: '/services/strava-integration'
   },
   {
@@ -58,11 +58,34 @@ const PROJECTS: ProjectItem[] = [
   }
 ];
 
+// Photo gallery images (local copies)
+const GALLERY_IMAGES: string[] = [
+  "/images/IMG_8111-fi35655319x513.JPG",
+  "/images/IMG_6280 copie-fi35655334x660.JPG",
+  "/images/IMG_7454-fi35655358x478.JPG",
+  "/images/IMG_6273-fi35655346x373.JPG",
+  "/images/IMG_6074-fi35655370x660.JPG",
+  "/images/IMG_0152-fi35655393x380.JPG",
+  "/images/IMG_9745-fi35655414x660.JPG",
+  "/images/IMG_8619-fi35655452x470.JPG",
+  "/images/ECPA Weekend Final-051-fi35655507x299.jpg",
+  "/images/IMG_8290-fi35655441x453.JPG",
+  "/images/IMG_9391-fi35655430x260.JPG",
+  "/images/IMG_9962 Grande-fi35655497x340.jpeg",
+  "/images/IMG_6306-fi35655471x280.JPG",
+  "/images/IMG_7944-fi35655505x320.JPG",
+  "/images/IMG_7568-fi35655511x315.JPG",
+  "/images/ECPA Weekend Final-055-fi35655516x360.jpg",
+  "/images/IMG_7425-fi35655526x327.JPG",
+];
 // Carousel for Projects - two rows, portrait image left and text right per card
 const ProjectsCarousel: React.FC<{ items?: ProjectItem[] }> = ({ items = PROJECTS }) => {
   const [active, setActive] = React.useState(0);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const slideRefs = React.useRef<Array<HTMLDivElement | null>>([]);
+  const wheelAccumRef = React.useRef(0);
+  const isAnimatingRef = React.useRef(false);
+  const touchStartXRef = React.useRef<number | null>(null);
 
   // group items into pairs to render two rows per slide
   const slides = React.useMemo(() => {
@@ -74,14 +97,19 @@ const ProjectsCarousel: React.FC<{ items?: ProjectItem[] }> = ({ items = PROJECT
   }, [items]);
 
   const scrollTo = (index: number) => {
+    const cont = containerRef.current;
     const el = slideRefs.current[index];
-    if (el) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    if (!cont || !el) return;
+    isAnimatingRef.current = true;
     setActive(index);
+    cont.scrollTo({ left: el.offsetLeft, behavior: 'smooth' });
+    window.setTimeout(() => { isAnimatingRef.current = false; }, 420);
   };
 
   const onScroll = () => {
     const cont = containerRef.current;
     if (!cont) return;
+    if (isAnimatingRef.current) return;
 
     const maxScroll = cont.scrollWidth - cont.clientWidth;
     // Clamp at edges so the dot reaches both ends when fully scrolled
@@ -94,18 +122,14 @@ const ProjectsCarousel: React.FC<{ items?: ProjectItem[] }> = ({ items = PROJECT
       return;
     }
 
-    // Otherwise, pick the slide whose center is closest to the container center
-    const center = cont.scrollLeft + cont.clientWidth / 2;
+    // Otherwise, pick the slide whose left edge is closest to current scrollLeft
     let best = 0; let bestDist = Infinity;
     slideRefs.current.forEach((el, i) => {
       if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const contRect = cont.getBoundingClientRect();
-      const slideCenter = rect.left - contRect.left + rect.width / 2 + cont.scrollLeft;
-      const dist = Math.abs(slideCenter - center);
+      const dist = Math.abs(el.offsetLeft - cont.scrollLeft);
       if (dist < bestDist) { bestDist = dist; best = i; }
     });
-    setActive(best);
+    if (best !== active) setActive(best);
   };
 
   React.useEffect(() => {
@@ -113,49 +137,99 @@ const ProjectsCarousel: React.FC<{ items?: ProjectItem[] }> = ({ items = PROJECT
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Wheel-to-slide snapping: step exactly one slide per gesture
+  const onWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
+    // Use dominant axis (handles trackpads emitting deltaY)
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    wheelAccumRef.current += delta;
+    const threshold = 40; // pixels
+
+    if (wheelAccumRef.current > threshold) {
+      if (active < slides.length - 1) {
+        e.preventDefault();
+        wheelAccumRef.current = 0;
+        scrollTo(active + 1);
+      } else {
+        wheelAccumRef.current = threshold; // clamp
+      }
+    } else if (wheelAccumRef.current < -threshold) {
+      if (active > 0) {
+        e.preventDefault();
+        wheelAccumRef.current = 0;
+        scrollTo(active - 1);
+      } else {
+        wheelAccumRef.current = -threshold; // clamp
+      }
+    }
+  };
+
+  const onTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+  const onTouchEnd: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    const startX = touchStartXRef.current;
+    touchStartXRef.current = null;
+    if (startX == null) return;
+    const endX = e.changedTouches[0].clientX;
+    const dx = endX - startX;
+    const swipeThreshold = 50;
+    if (dx < -swipeThreshold && active < slides.length - 1) {
+      scrollTo(active + 1);
+    } else if (dx > swipeThreshold && active > 0) {
+      scrollTo(active - 1);
+    }
+  };
+
   return (
     <div className="relative">
       <div
         ref={containerRef}
         onScroll={onScroll}
-        className="no-scrollbar overflow-x-auto scroll-smooth snap-x snap-mandatory"
+        onWheel={onWheel}
+        className="no-scrollbar overflow-x-auto snap-x snap-mandatory"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         <div className="flex items-stretch gap-6 px-6">
           {slides.map((pair, i) => (
             <div
               key={i}
               ref={(el) => { slideRefs.current[i] = el; }}
-              className={`snap-center transition-transform duration-300 flex-shrink-0 w-[320px] sm:w-[380px] lg:w-[420px] ${i === active ? 'scale-100' : 'scale-95 opacity-95'}`}
+              className="snap-start flex-shrink-0 w-[320px] sm:w-[380px] lg:w-[420px]"
             >
-              <div className="flex flex-col gap-6">
+              <div className={`flex flex-col gap-6 rounded-2xl ${i === active ? 'ring-2 ring-accent' : 'ring-0'} p-1`}>
                 {pair.map((p, j) => (
-                  <div key={`${p.title}-${j}`} className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] flex">
-                    <div className="p-4 w-full">
-                      <div className="grid grid-cols-[140px_1fr] gap-4 items-center h-full">
-                        <div className="w-[140px] h-[140px] rounded-md overflow-hidden bg-gray-100">
-                          {p.link ? (
-                            <a href={p.link} target={p.link.startsWith('http') ? '_blank' : undefined} rel={p.link.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                  p.link ? (
+                    <a key={`${p.title}-${j}`} href={p.link} target={p.link.startsWith('http') ? '_blank' : undefined} rel={p.link.startsWith('http') ? 'noopener noreferrer' : undefined} className="block">
+                      <div className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] flex">
+                        <div className="p-4 w-full">
+                          <div className="grid grid-cols-[140px_1fr] gap-4 items-center h-full">
+                            <div className="w-[140px] h-[140px] rounded-md overflow-hidden bg-gray-100">
                               <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
-                            </a>
-                          ) : (
-                            <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
-                          )}
+                            </div>
+                            <div className="h-full flex flex-col justify-center">
+                              <h3 className="text-lg font-semibold hover:underline">{p.title}</h3>
+                              <p className="text-gray-700 text-sm mt-1 leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{p.description}</p>
+                            </div>
+                          </div>
                         </div>
-                        <div className="h-full flex flex-col justify-center">
-                          <h3 className="text-lg font-semibold">
-                            {p.link ? (
-                              <a href={p.link} target={p.link.startsWith('http') ? '_blank' : undefined} rel={p.link.startsWith('http') ? 'noopener noreferrer' : undefined} className="hover:underline">
-                                {p.title}
-                              </a>
-                            ) : (
-                              p.title
-                            )}
-                          </h3>
-                          <p className="text-gray-700 text-sm mt-1 leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{p.description}</p>
+                      </div>
+                    </a>
+                  ) : (
+                    <div key={`${p.title}-${j}`} className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] flex">
+                      <div className="p-4 w-full">
+                        <div className="grid grid-cols-[140px_1fr] gap-4 items-center h-full">
+                          <div className="w-[140px] h-[140px] rounded-md overflow-hidden bg-gray-100">
+                            <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                          </div>
+                          <div className="h-full flex flex-col justify-center">
+                            <h3 className="text-lg font-semibold">{p.title}</h3>
+                            <p className="text-gray-700 text-sm mt-1 leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{p.description}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )
                 ))}
               </div>
             </div>
@@ -251,6 +325,8 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
           />
         </div>
       </section>
+
+
 
 
 
@@ -626,52 +702,12 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
       </section>
       {/* Former Success Stories section removed; content merged into Projects carousel */}
 
-      {/* Photos & Media Section */}
+      {/* Media Section */}
       <section
         ref={(el) => { sectionRefs.current['media'] = el; }}
         className="py-20 bg-dark-secondary"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12">Photos & Media</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="aspect-square bg-gray-700 rounded-lg flex items-center justify-center">
-              <div className="text-center p-4">
-                <p className="text-gray-400 font-medium">Laboratory Setup</p>
-                <p className="text-sm text-gray-500 mt-2">State-of-the-art performance testing facility</p>
-              </div>
-            </div>
-            <div className="aspect-square bg-gray-700 rounded-lg flex items-center justify-center">
-              <div className="text-center p-4">
-                <p className="text-gray-400 font-medium">Athlete Testing</p>
-                <p className="text-sm text-gray-500 mt-2">Elite athletes undergoing physiological assessment</p>
-              </div>
-            </div>
-            <div className="aspect-square bg-gray-700 rounded-lg flex items-center justify-center">
-              <div className="text-center p-4">
-                <p className="text-gray-400 font-medium">Data Analysis</p>
-                <p className="text-sm text-gray-500 mt-2">Advanced analytics and performance modeling</p>
-              </div>
-            </div>
-            <div className="aspect-square bg-gray-700 rounded-lg flex items-center justify-center">
-              <div className="text-center p-4">
-                <p className="text-gray-400 font-medium">Award Ceremony</p>
-                <p className="text-sm text-gray-500 mt-2">Celebrating championship victories with coached athletes</p>
-              </div>
-            </div>
-            <div className="aspect-square bg-gray-700 rounded-lg flex items-center justify-center">
-              <div className="text-center p-4">
-                <p className="text-gray-400 font-medium">Research Team</p>
-                <p className="text-sm text-gray-500 mt-2">The Enduraw performance science team</p>
-              </div>
-            </div>
-            <div className="aspect-square bg-gray-700 rounded-lg flex items-center justify-center">
-              <div className="text-center p-4">
-                <p className="text-gray-400 font-medium">Media Coverage</p>
-                <p className="text-sm text-gray-500 mt-2">Featured interviews and press coverage</p>
-              </div>
-            </div>
-          </div>
-
           <div className="mt-12 text-center">
             <h3 className="text-2xl font-semibold mb-4">Media Coverage</h3>
             <div className="grid md:grid-cols-2 gap-6">
@@ -696,6 +732,33 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
                 </ul>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Photography Gallery */}
+      <section className="py-16 bg-dark-bg text-white font-sans">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-x-auto">
+            <div className="flex gap-4 w-max">
+              {GALLERY_IMAGES.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt="Gallery"
+                  loading="lazy"
+                  className="h-72 md:h-80 object-cover rounded-lg flex-none shadow"
+                />
+              ))}
+            </div>
+          </div>
+          <div className="mt-8 text-center">
+            <p className="text-base md:text-base text-gray-300">
+              I'm also a keen photographer. Find some of my work on {' '}
+              <a href="http://josephmestrallet.pixieset.com" target="_blank" rel="noreferrer" className="underline hover:text-gray-200">
+                this link
+              </a>.
+            </p>
           </div>
         </div>
       </section>
