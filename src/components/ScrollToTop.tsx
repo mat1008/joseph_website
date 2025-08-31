@@ -16,7 +16,7 @@ const ScrollToTop: React.FC = () => {
     if (location.hash) return;
     // Otherwise, always scroll to top on pathname change
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  }, [location.pathname, location.key]);
+  }, [location.pathname, location.key, location.hash]);
 
   return null;
 };
