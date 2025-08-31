@@ -78,196 +78,43 @@ const GALLERY_IMAGES: string[] = [
   "/images/ECPA Weekend Final-055-fi35655516x360.jpg",
   "/images/IMG_7425-fi35655526x327.JPG",
 ];
-// Carousel for Projects - two rows, portrait image left and text right per card
-const ProjectsCarousel: React.FC<{ items?: ProjectItem[] }> = ({ items = PROJECTS }) => {
-  const [active, setActive] = React.useState(0);
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
-  const slideRefs = React.useRef<Array<HTMLDivElement | null>>([]);
-  const wheelAccumRef = React.useRef(0);
-  const isAnimatingRef = React.useRef(false);
-  const touchStartXRef = React.useRef<number | null>(null);
-
-  // group items into pairs to render two rows per slide
-  const slides = React.useMemo(() => {
-    const out: ProjectItem[][] = [];
-    for (let i = 0; i < items.length; i += 2) {
-      out.push(items.slice(i, i + 2));
-    }
-    return out;
-  }, [items]);
-
-  const scrollTo = (index: number) => {
-    const cont = containerRef.current;
-    const el = slideRefs.current[index];
-    if (!cont || !el) return;
-    isAnimatingRef.current = true;
-    setActive(index);
-    cont.scrollTo({ left: el.offsetLeft, behavior: 'smooth' });
-    window.setTimeout(() => { isAnimatingRef.current = false; }, 420);
-  };
-
-  const onScroll = () => {
-    const cont = containerRef.current;
-    if (!cont) return;
-    if (isAnimatingRef.current) return;
-
-    const maxScroll = cont.scrollWidth - cont.clientWidth;
-    // Clamp at edges so the dot reaches both ends when fully scrolled
-    if (cont.scrollLeft <= 6) {
-      setActive(0);
-      return;
-    }
-    if (cont.scrollLeft >= maxScroll - 6) {
-      setActive(slides.length - 1);
-      return;
-    }
-
-    // Otherwise, pick the slide whose left edge is closest to current scrollLeft
-    let best = 0; let bestDist = Infinity;
-    slideRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const dist = Math.abs(el.offsetLeft - cont.scrollLeft);
-      if (dist < bestDist) { bestDist = dist; best = i; }
-    });
-    if (best !== active) setActive(best);
-  };
-
-  React.useEffect(() => {
-    scrollTo(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Wheel-to-slide snapping: step exactly one slide per gesture
-  const onWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
-    // Use dominant axis (handles trackpads emitting deltaY)
-    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    wheelAccumRef.current += delta;
-    const threshold = 40; // pixels
-
-    if (wheelAccumRef.current > threshold) {
-      if (active < slides.length - 1) {
-        e.preventDefault();
-        wheelAccumRef.current = 0;
-        scrollTo(active + 1);
-      } else {
-        wheelAccumRef.current = threshold; // clamp
-      }
-    } else if (wheelAccumRef.current < -threshold) {
-      if (active > 0) {
-        e.preventDefault();
-        wheelAccumRef.current = 0;
-        scrollTo(active - 1);
-      } else {
-        wheelAccumRef.current = -threshold; // clamp
-      }
-    }
-  };
-
-  const onTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
-    touchStartXRef.current = e.touches[0].clientX;
-  };
-  const onTouchEnd: React.TouchEventHandler<HTMLDivElement> = (e) => {
-    const startX = touchStartXRef.current;
-    touchStartXRef.current = null;
-    if (startX == null) return;
-    const endX = e.changedTouches[0].clientX;
-    const dx = endX - startX;
-    const swipeThreshold = 50;
-    if (dx < -swipeThreshold && active < slides.length - 1) {
-      scrollTo(active + 1);
-    } else if (dx > swipeThreshold && active > 0) {
-      scrollTo(active - 1);
-    }
-  };
-
+// Projects scroller: two horizontal rows inside an overflow container
+const ProjectsScroller: React.FC<{ items?: ProjectItem[] }> = ({ items = PROJECTS }) => {
   return (
-    <div className="relative">
-      <div
-        ref={containerRef}
-        onScroll={onScroll}
-        onWheel={onWheel}
-        className="no-scrollbar overflow-x-auto snap-x snap-mandatory"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      >
-        <div className="flex items-stretch gap-6 px-6">
-          {slides.map((pair, i) => (
-            <div
-              key={i}
-              ref={(el) => { slideRefs.current[i] = el; }}
-              className="snap-start flex-shrink-0 w-[320px] sm:w-[380px] lg:w-[420px]"
-            >
-              <div className={`flex flex-col gap-6 rounded-2xl ${i === active ? 'ring-2 ring-accent' : 'ring-0'} p-1`}>
-                {pair.map((p, j) => (
-                  p.link ? (
-                    <a key={`${p.title}-${j}`} href={p.link} target={p.link.startsWith('http') ? '_blank' : undefined} rel={p.link.startsWith('http') ? 'noopener noreferrer' : undefined} className="block">
-                      <div className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] flex">
-                        <div className="p-4 w-full">
-                          <div className="grid grid-cols-[140px_1fr] gap-4 items-center h-full">
-                            <div className="w-[140px] h-[140px] rounded-md overflow-hidden bg-gray-100">
-                              <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
-                            </div>
-                            <div className="h-full flex flex-col justify-center">
-                              <h3 className="text-lg font-semibold hover:underline">{p.title}</h3>
-                              <p className="text-gray-700 text-sm mt-1 leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{p.description}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  ) : (
-                    <div key={`${p.title}-${j}`} className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] flex">
-                      <div className="p-4 w-full">
-                        <div className="grid grid-cols-[140px_1fr] gap-4 items-center h-full">
-                          <div className="w-[140px] h-[140px] rounded-md overflow-hidden bg-gray-100">
-                            <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
-                          </div>
-                          <div className="h-full flex flex-col justify-center">
-                            <h3 className="text-lg font-semibold">{p.title}</h3>
-                            <p className="text-gray-700 text-sm mt-1 leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{p.description}</p>
-                          </div>
-                        </div>
-                      </div>
+    <div className="relative overflow-x-auto scrollbar-thumb-black">
+      <div className="grid grid-rows-2 grid-flow-col auto-cols gap-6 px-6">
+        {items.map((p, idx) => (
+          p.link ? (
+            <a key={`${p.title}-${idx}`} href={p.link} target={p.link.startsWith('http') ? '_blank' : undefined} rel={p.link.startsWith('http') ? 'noopener noreferrer' : undefined} className="block group">
+              <div className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] flex ring-0 transition group-hover:ring-2 group-hover:ring-accent">
+                <div className="p-4 w-full">
+                  <div className="grid grid-cols-[140px_1fr] gap-4 items-center h-full">
+                    <div className="w-[140px] h-[140px] rounded-md overflow-hidden bg-gray-100">
+                      <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
                     </div>
-                  )
-                ))}
+                    <div className="h-full flex flex-col justify-center">
+                      <h3 className="text-lg font-semibold">{p.title}</h3>
+                      <p className="text-gray-700 text-sm mt-1 leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{p.description}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ) : (
+            <div key={`${p.title}-${idx}`} className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] flex ring-0 transition hover:ring-2 hover:ring-accent">
+              <div className="p-4 w-full">
+                <div className="grid grid-cols-[140px_1fr] gap-4 items-center h-full">
+                  <div className="w-[140px] h-[140px] rounded-md overflow-hidden bg-gray-100">
+                    <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="h-full flex flex-col justify-center">
+                    <h3 className="text-lg font-semibold">{p.title}</h3>
+                    <p className="text-gray-700 text-sm mt-1 leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{p.description}</p>
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Controls - accent chevrons positioned outside (no wrap) */}
-      <button
-        onClick={() => active > 0 && scrollTo(active - 1)}
-        disabled={active === 0}
-        className={`hidden sm:flex absolute -left-12 md:-left-16 top-1/2 -translate-y-1/2 z-10 p-2 ${active === 0 ? 'text-accent/40 cursor-default pointer-events-none' : 'text-accent hover:text-accent-light'}`}
-        aria-label="Previous"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-      </button>
-      <button
-        onClick={() => active < slides.length - 1 && scrollTo(active + 1)}
-        disabled={active === slides.length - 1}
-        className={`hidden sm:flex absolute -right-12 md:-right-16 top-1/2 -translate-y-1/2 z-10 p-2 ${active === slides.length - 1 ? 'text-accent/40 cursor-default pointer-events-none' : 'text-accent hover:text-accent-light'}`}
-        aria-label="Next"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
-      </button>
-
-      {/* Dots */}
-      <div className="mt-6 flex justify-center gap-2">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => scrollTo(i)}
-            className={`w-2.5 h-2.5 rounded-full ${i === active ? 'bg-accent' : 'bg-black/30'}`}
-            aria-label={`Go to slide ${i + 1}`}
-          />
+          )
         ))}
       </div>
     </div>
@@ -690,17 +537,16 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
         </div>
       </section>
 
-      {/* Projects - Carousel (fused with former Success Stories) */}
+      {/* Projects - Scroller */}
       <section
         ref={(el) => { sectionRefs.current['main-projects'] = el; }}
         className="py-20 bg-white text-black"
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12 uppercase tracking-wide">Notable projects</h2>
-          <ProjectsCarousel />
+        <div className="px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-12 uppercase tracking-wide">Projects</h2>
+          <ProjectsScroller />
         </div>
       </section>
-      {/* Former Success Stories section removed; content merged into Projects carousel */}
 
       {/* Media Section */}
       <section

@@ -19,13 +19,13 @@ const StravaIntegrationPage: React.FC = () => {
           <img
             src="/images/strava_logo-fi35603244x260.png"
             alt="Strava logo"
-            className="h-20 object-contain"
+            className="h-40 object-contain"
             loading="lazy"
           />
           <img
             src="/images/logo_enduraw%20blanc-fi35471045x140.png"
             alt="Enduraw logo"
-            className="h-20 object-contain"
+            className="h-40 object-contain"
             loading="lazy"
           />
         </div>
