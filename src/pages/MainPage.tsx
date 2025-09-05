@@ -554,29 +554,39 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
         className="py-20 bg-dark-secondary"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mt-12 text-center">
-            <h3 className="text-2xl font-semibold mb-4">Media Coverage</h3>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-dark-bg p-6 rounded-lg">
-                <h4 className="font-semibold mb-2">Featured Publications</h4>
-                <ul className="text-sm text-gray-400 space-y-1">
-                  <li>• International Journal of Sports Science</li>
-                  <li>• Trail Runner Magazine</li>
-                  <li>• Ultra Running Research Quarterly</li>
-                  <li>• Exercise and Sport Sciences Reviews</li>
-                  <li>• Journal of Applied Physiology</li>
-                </ul>
-              </div>
-              <div className="bg-dark-bg p-6 rounded-lg">
-                <h4 className="font-semibold mb-2">Speaking Engagements</h4>
-                <ul className="text-sm text-gray-400 space-y-1">
-                  <li>• International Sports Science Conference</li>
-                  <li>• Elite Endurance Summit</li>
-                  <li>• Data Analytics in Sports Symposium</li>
-                  <li>• European Trail Running Congress</li>
-                  <li>• Performance Analytics Workshop Series</li>
-                </ul>
-              </div>
+          <div className="text-center">
+            <h3 className="text-2xl font-semibold mb-8">Media Coverage</h3>
+            <div className="max-w-4xl mx-auto">
+              <a 
+                href="https://www.linkedin.com/feed/update/urn:li:activity:7368561195525640192/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block bg-dark-bg p-8 rounded-lg hover:bg-gray-700 transition-colors group"
+              >
+                <div className="text-left">
+                  <h4 className="text-xl font-semibold mb-4 group-hover:text-accent transition-colors">
+                    UTMB 2025 Victory - Ruth Croft and Tom Evans' Exceptional Performance
+                  </h4>
+                  <div className="text-gray-300 space-y-4">
+                    <p>
+                      Two absolutely exceptional athletes achieved victory at UTMB, the most prestigious race in the world. 
+                    </p>
+                    <blockquote className="border-l-4 border-accent pl-4 italic">
+                      "I say that performance is 90% the athlete, 9% the coach, and I bring the last 1% of performance with Enduraw."
+                    </blockquote>
+                    <p>
+                      This victory showcases the comprehensive approach behind elite athlete success, emphasizing physiological modeling, 
+                      training monitoring, pacing strategy optimization, and extensive team support.
+                    </p>
+                    <div className="flex items-center gap-2 text-accent group-hover:text-white transition-colors">
+                      <span>View full post on LinkedIn</span>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
         </div>
