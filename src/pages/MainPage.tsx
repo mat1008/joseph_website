@@ -145,7 +145,7 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
         ref={(el) => { sectionRefs.current['hero'] = el; }}
         className="min-h-screen flex items-center justify-center pt-16 relative font-sans"
         style={{
-          backgroundImage: "url('/images/IMG_9962 Grande copie-fi35704818x2000.jpeg')",
+          backgroundImage: "url('/images/tomlactate.jpeg')",
           backgroundSize: 'cover',
           backgroundPosition: 'right center',
           backgroundAttachment: 'fixed',
@@ -166,7 +166,7 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
         {/* Original image from homepage */}
         <div className="absolute right-16 top-1/2 transform -translate-y-1/2 hidden lg:block">
           <img
-            src="/images/IMG_9962 Grande copie-fi35704818x2000.jpeg"
+            src="/images/tomlactate.jpeg"
             alt="Joseph Mestrallet"
             className="w-80 h-auto rounded-lg shadow-2xl"
           />
@@ -268,7 +268,7 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
           <div className="text-center mb-12">
             <div className="mb-8">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 uppercase tracking-wide">
-                Enduraw: Performance Consultancy
+                Enduraw: Performance Experience
               </h2>
             </div>
             <div className="flex justify-center mb-8">
