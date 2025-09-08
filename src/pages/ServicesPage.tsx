@@ -155,7 +155,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
             </p>
             <div className="mt-4 flex gap-3">
               <a href="/services/race-briefing" className="bg-accent hover:bg-accent-light text-white px-5 py-2 rounded-md font-semibold">Discover Race Briefing</a>
-              <a href="mailto:joseph.mestrallet@gmail.com" className="bg-dark-bg hover:bg-gray-700 text-white px-5 py-2 rounded-md font-semibold">Contact us</a>
+              <a href="mailto:contact.enduraw@gmail.com" className="bg-dark-bg hover:bg-gray-700 text-white px-5 py-2 rounded-md font-semibold">Contact us</a>
             </div>
           </div>
 
@@ -204,22 +204,43 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
                   </span>
                 </div>
                 <p className="text-gray-300 mb-5 flex-1">{o.description}</p>
-                <Link
-                  to={o.to}
-                  className={`inline-block ${o.id === 'strava-integration' || o.id === 'physiological-testing'
-                    ? ''
-                    : 'bg-accent hover:bg-accent-light'
-                    } text-white px-5 py-2 rounded-md font-semibold text-center`}
-                  style={
-                    o.id === 'strava-integration'
-                      ? { backgroundColor: '#fc4c02' }
-                      : o.id === 'physiological-testing'
-                        ? { backgroundColor: '#8b5cf6' }
-                        : undefined
-                  }
-                >
-                  {o.cta}
-                </Link>
+                {o.to.startsWith('http') ? (
+                  <a
+                    href={o.to}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-block ${o.id === 'strava-integration' || o.id === 'physiological-testing'
+                      ? ''
+                      : 'bg-accent hover:bg-accent-light'
+                      } text-white px-5 py-2 rounded-md font-semibold text-center`}
+                    style={
+                      o.id === 'strava-integration'
+                        ? { backgroundColor: '#fc4c02' }
+                        : o.id === 'physiological-testing'
+                          ? { backgroundColor: '#8b5cf6' }
+                          : undefined
+                    }
+                  >
+                    {o.cta}
+                  </a>
+                ) : (
+                  <Link
+                    to={o.to}
+                    className={`inline-block ${o.id === 'strava-integration' || o.id === 'physiological-testing'
+                      ? ''
+                      : 'bg-accent hover:bg-accent-light'
+                      } text-white px-5 py-2 rounded-md font-semibold text-center`}
+                    style={
+                      o.id === 'strava-integration'
+                        ? { backgroundColor: '#fc4c02' }
+                        : o.id === 'physiological-testing'
+                          ? { backgroundColor: '#8b5cf6' }
+                          : undefined
+                    }
+                  >
+                    {o.cta}
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -239,7 +260,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ activeSection }) => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:joseph.mestrallet@gmail.com"
+                href="mailto:contact.enduraw@gmail.com"
                 className="bg-accent hover:bg-accent-light text-white px-8 py-3 rounded-lg font-semibold transition-colors"
               >
                 Contact us

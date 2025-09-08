@@ -80,7 +80,7 @@ const PhysiologicalTestingPage: React.FC = () => {
         <section className="mb-10">
           <h3 className="text-2xl font-semibold mb-3">Are you interested?</h3>
           <p className="text-gray-300">Send us your Name, Surname, Email and the test you are interested in / questions.</p>
-          <a href="mailto:joseph.mestrallet@gmail.com" className="inline-block mt-3 bg-accent hover:bg-accent-light text-white px-6 py-2 rounded-lg font-semibold">Contact us</a>
+          <a href="mailto:contact.enduraw@gmail.com" className="inline-block mt-3 bg-accent hover:bg-accent-light text-white px-6 py-2 rounded-lg font-semibold">Contact us</a>
         </section>
 
         <section>

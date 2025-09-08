@@ -75,7 +75,14 @@ const RaceBriefingPage: React.FC = () => {
         </section>
 
         <section className="mb-8 text-center">
-          <button className="inline-block bg-accent hover:bg-accent-light text-white px-8 py-3 rounded-lg font-semibold">Discover the product</button>
+          <a 
+            href="https://enduraw-report-strava.onrender.com/pacingplan?demo=true" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-block bg-accent hover:bg-accent-light text-white px-8 py-3 rounded-lg font-semibold"
+          >
+            Discover the product
+          </a>
           <p className="text-gray-400 mt-2">Available in English, Spanish, French • Discounts for 3 or more briefing plans</p>
         </section>
 

@@ -11,6 +11,17 @@ type ProjectItem = {
 
 const PROJECTS: ProjectItem[] = [
   {
+    title: 'UTMB 2025',
+    description: "Performance science support for Tom Evans and Ruth Croft's exceptional UTMB victory",
+    image: '/images/tomruth.jpg',
+    link: 'https://www.linkedin.com/feed/update/urn:li:activity:7368561195525640192/'
+  },
+  {
+    title: 'UTMB 2024',
+    description: "Strategic pacing and performance optimization for elite UTMB athletes",
+    image: '/images/ruth2024.jpg',
+  },
+  {
     title: 'UTMB 2023',
     description: "Management of Ruth Croft and Duncan Périllat's pacing and nutrition plan",
     image: '/images/IMG_7658-fi35603242x140.JPG',
@@ -82,11 +93,11 @@ const GALLERY_IMAGES: string[] = [
 const ProjectsScroller: React.FC<{ items?: ProjectItem[] }> = ({ items = PROJECTS }) => {
   return (
     <div className="relative overflow-x-auto scrollbar-thumb-black">
-      <div className="grid grid-rows-2 grid-flow-col auto-cols gap-6 px-6">
+      <div className="grid grid-rows-2 grid-flow-col auto-cols-max gap-6 px-6">
         {items.map((p, idx) => (
           p.link ? (
             <a key={`${p.title}-${idx}`} href={p.link} target={p.link.startsWith('http') ? '_blank' : undefined} rel={p.link.startsWith('http') ? 'noopener noreferrer' : undefined} className="block group">
-              <div className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] flex ring-0 transition group-hover:ring-2 group-hover:ring-accent">
+              <div className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] w-[400px] flex ring-0 transition group-hover:ring-2 group-hover:ring-accent">
                 <div className="p-4 w-full">
                   <div className="grid grid-cols-[140px_1fr] gap-4 items-center h-full">
                     <div className="w-[140px] h-[140px] rounded-md overflow-hidden bg-gray-100">
@@ -101,7 +112,7 @@ const ProjectsScroller: React.FC<{ items?: ProjectItem[] }> = ({ items = PROJECT
               </div>
             </a>
           ) : (
-            <div key={`${p.title}-${idx}`} className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] flex ring-0 transition hover:ring-2 hover:ring-accent">
+            <div key={`${p.title}-${idx}`} className="bg-white text-black rounded-2xl shadow-md overflow-hidden h-[180px] w-[400px] flex ring-0 transition hover:ring-2 hover:ring-accent">
               <div className="p-4 w-full">
                 <div className="grid grid-cols-[140px_1fr] gap-4 items-center h-full">
                   <div className="w-[140px] h-[140px] rounded-md overflow-hidden bg-gray-100">
@@ -143,7 +154,7 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
       {/* Hero Section - using original background image */}
       <section
         ref={(el) => { sectionRefs.current['hero'] = el; }}
-        className="min-h-screen flex items-center justify-center pt-16 relative font-sans"
+        className="min-h-screen flex items-center pt-16 relative font-sans"
         style={{
           backgroundImage: "url('/images/tomlactate.jpeg')",
           backgroundSize: 'cover',
@@ -153,7 +164,7 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-32"></div>
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 xl:px-20 2xl:px-28 w-full">
           <div className="max-w-md">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white uppercase tracking-wide font-sans">
               Joseph Mestrallet
@@ -163,12 +174,12 @@ const MainPage: React.FC<MainPageProps> = ({ activeSection }) => {
             </p>
           </div>
         </div>
-        {/* Original image from homepage */}
+        {/* Original image from homepage - made larger */}
         <div className="absolute right-16 top-1/2 transform -translate-y-1/2 hidden lg:block">
           <img
             src="/images/tomlactate.jpeg"
             alt="Joseph Mestrallet"
-            className="w-80 h-auto rounded-lg shadow-2xl"
+            className="w-96 h-auto rounded-lg shadow-2xl"
           />
         </div>
       </section>

@@ -84,12 +84,15 @@ const StravaIntegrationPage: React.FC = () => {
         {/* Moved the explanatory text next to the image above */}
 
         <div className="mb-12 text-center">
-          <button
+          <a
+            href="https://enduraw-report-strava.onrender.com/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-accent hover:bg-accent-light text-white px-8 py-3 rounded-lg font-semibold transition-colors"
             aria-label="Open Enduraw Report"
           >
             Click here for Enduraw Report!
-          </button>
+          </a>
         </div>
 
         <section className="mb-12">
